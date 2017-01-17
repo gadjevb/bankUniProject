@@ -45,7 +45,7 @@ public class DataStore {
         list.add(row);
       }
     } catch (SQLException e) {
-      throw new IllegalStateException("ConnectionProvider to the database wasn't established");
+    //  throw new IllegalStateException("ConnectionProvider to the database wasn't established");
     } finally {
       close(connection);
     }

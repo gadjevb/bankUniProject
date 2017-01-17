@@ -37,8 +37,8 @@ public class PersistentAccountRepository implements AccountRepository {
     dataStore.runInTransaction(new TransactionCall() {
       @Override
       public void execute(Connection connection) {
-        BigDecimal currentBalance = dataStore.fetchOne(connection, "select amount from accounts where name=?", name);
-        dataStore.executeUpdate(connection, "update accounts set amount=? where name=?", currentBalance.add(BigDecimal.valueOf(balance)), name);
+        BigDecimal currentBalance = dataStore.fetchOne(connection, "select account_Balance from accounts where account_Name=?", name);
+        dataStore.executeUpdate(connection, "update accounts set account_Balance=? where account_Name=?", currentBalance.add(BigDecimal.valueOf(balance)), name);
       }
     });
   }
@@ -48,15 +48,15 @@ public class PersistentAccountRepository implements AccountRepository {
     dataStore.runInTransaction(new TransactionCall() {
       @Override
       public void execute(Connection connection) {
-        BigDecimal currentBalance = dataStore.fetchOne(connection, "select amount from accounts where name=?", name);
-        dataStore.executeUpdate(connection, "update accounts set amount=? where name=?", currentBalance.subtract(BigDecimal.valueOf(balance)), name);
+        BigDecimal currentBalance = dataStore.fetchOne(connection, "select account_Balance from accounts where account_Name=?", name);
+        dataStore.executeUpdate(connection, "update accounts set account_Balance=? where account_Name=?", currentBalance.subtract(BigDecimal.valueOf(balance)), name);
       }
     });
   }
 
   @Override
   public Optional<Account> getByName(String name) {
-    String query = "select * from accounts where Name='" + name + "'";
+    String query = "select * from accounts where account_Name='" + name + "'";
     List<Account> accounts = dataStore.fetchRows(query, new RowFetcher<Account>() {
       @Override
       public Account fetchRow(ResultSet resultSet) {

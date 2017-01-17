@@ -69,7 +69,7 @@ public class PersistentDailyActivityRepositoryTest {
     java.sql.Connection connection = provider.get();
     Statement statement = connection.createStatement();
     for (int i = 0; i < capacity; i++) {
-      statement.executeUpdate("insert into transaction_history(Date,Name,Operation,Amount) values('" + transaction.operationDate + "','" + transaction.customerName + "','" + transaction.operationType + "'," + transaction.amount + ");");
+      statement.executeUpdate("insert into transaction_history(transaction_Date,account_Name,transaction_Operation,transaction_Amount) values('" + transaction.operationDate + "','" + transaction.customerName + "','" + transaction.operationType + "'," + transaction.amount + ");");
     }
     connection.close();
   }

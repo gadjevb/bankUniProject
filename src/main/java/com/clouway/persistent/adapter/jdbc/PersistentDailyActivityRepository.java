@@ -29,7 +29,7 @@ public class PersistentDailyActivityRepository implements DailyActivityRepositor
   }
 
   private Integer get(String operation) {
-    String query = "select count(operation) from transaction_history as disOpt where operation='" + operation + "' and date >= CURDATE();";
+    String query = "select count(transaction_Operation) from transaction_history as disOpt where transaction_Operation='" + operation + "' and transaction_Date >= CURDATE();";
     return dataStore.fetchRows(query, new RowFetcher<Integer>() {
       @Override
       public Integer fetchRow(ResultSet resultSet) {

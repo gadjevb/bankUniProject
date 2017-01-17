@@ -33,7 +33,7 @@ public class PersistentSessionRepository implements SessionsRepository {
 
   @Override
   public Optional<Session> findBySID(String uid) {
-    String query = "select * from sessions where id='" + uid + "'";
+    String query = "select * from sessions where session_Id='" + uid + "'";
     List<Session> session = getSession(query);
     return session.isEmpty() ? Optional.empty() : Optional.ofNullable(session.iterator().next());
   }
@@ -46,7 +46,7 @@ public class PersistentSessionRepository implements SessionsRepository {
 
   @Override
   public Integer countSessions() {
-    String query = "select count(distinct Name) from sessions";
+    String query = "select count(distinct session_Name) from sessions";
     return dataStore.fetchRows(query, resultSet -> {
       try {
         return resultSet.getInt(1);
@@ -59,7 +59,7 @@ public class PersistentSessionRepository implements SessionsRepository {
 
   @Override
   public void deleteByID(String id) {
-    String query = "delete from sessions where ID=?";
+    String query = "delete from sessions where session_ID=?";
     dataStore.update(query, id);
   }
 

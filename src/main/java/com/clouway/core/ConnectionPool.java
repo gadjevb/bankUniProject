@@ -11,10 +11,10 @@ public class ConnectionPool {
   public static synchronized BasicDataSource get() {
     if (source == null) {
       source = new BasicDataSource();
-      String host = System.getenv("BANK_DB_HOST");
-      String user = System.getenv("BANK_DB_USER");
-      String pass = System.getenv("BANK_DB_PASS");
-      String dbName = System.getenv("BANK_DB_NAME");
+      String host = "localhost";
+      String user = "root";
+      String pass = "clouway.com";
+      String dbName = "bankdb";
 
       source.setDriverClassName("com.mysql.jdbc.Driver");
       source.setUsername(user);

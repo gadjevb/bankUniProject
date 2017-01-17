@@ -21,7 +21,7 @@ public class PersistentHistoryRepository implements HistoryRepository {
 
   @Override
   public List<Transaction> getBalanceHistory(String username, int offset, int limit) {
-    String query = "select * from transaction_history where name='" + username + "' order by date limit " + offset + "," + limit + ";";
+    String query = "select * from transaction_history where account_Name='" + username + "' order by transaction_Date limit " + offset + "," + limit + ";";
     return dataStore.fetchRows(query, set -> {
       try {
         return new Transaction(set.getTimestamp(1), set.getString(2), set.getString(3), set.getDouble(4));

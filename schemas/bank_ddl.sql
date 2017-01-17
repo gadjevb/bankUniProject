@@ -1,41 +1,41 @@
 create table accounts(
-ID        INT            NOT NULL PRIMARY KEY AUTO_INCREMENT,
-Name      VARCHAR(50)    NOT NULL,
-Password  VARCHAR(18)    NOT NULL,
-Amount    DOUBLE         NOT NULL
+account_ID         INT            NOT NULL PRIMARY KEY AUTO_INCREMENT,
+account_Name       VARCHAR(50)    NOT NULL,
+account_Password   VARCHAR(18)    NOT NULL,
+account_Balance    DOUBLE         NOT NULL
 );
 
 create table sessions(
-ID                VARCHAR(100)    NOT NULL PRIMARY KEY,
-Name              VARCHAR(50)     NOT NULL,
-CreationDate      DATETIME        NOT NULL
+session_ID                VARCHAR(100)    NOT NULL PRIMARY KEY,
+session_Name              VARCHAR(50)     NOT NULL,
+session_CreationDate      DATETIME        NOT NULL
 );
 
 CREATE TABLE transaction_history(
-Date        TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP,
-Name        VARCHAR(50)      NOT NULL,
-Operation   VARCHAR(10)      NOT NULL,
-Amount      DOUBLE           NOT NULL
+transaction_Date        TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP,
+account_Name            VARCHAR(50)      NOT NULL,
+transaction_Operation   VARCHAR(10)      NOT NULL,
+transaction_Amount      DOUBLE           NOT NULL
 );
 
 CREATE TABLE transfer_history(
-Date        TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP,
-NameFrom    VARCHAR(50)      NOT NULL,
-NameTo      VARCHAR(50)      NOT NULL,
-Amount      DOUBLE           NOT NULL
+transfer_Date        TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP,
+account_NameFrom     VARCHAR(50)      NOT NULL,
+account_NameTo       VARCHAR(50)      NOT NULL,
+transfer_Amount      DOUBLE           NOT NULL
 );
 
 DELIMITER $$
 CREATE TRIGGER transaction_history BEFORE UPDATE ON accounts
 FOR EACH ROW
 BEGIN
-IF (NEW.Amount > OLD.Amount) THEN
-            SET @Operation = "Deposit";
-            SET @OpValue = NEW.Amount - OLD.Amount;
+IF (NEW.account_Balance > OLD.account_Balance) THEN
+            SET @transaction_Operation = "Deposit";
+            SET @OpValue = NEW.account_Balance - OLD.account_Balance;
       ELSE
-            SET @Operation = "Withdraw";
-            SET @OpValue = OLD.Amount - NEW.Amount;
+            SET @transaction_Operation = "Withdraw";
+            SET @OpValue = OLD.account_Balance - NEW.account_Balance;
       END IF;
-INSERT INTO transaction_history VALUES(NULL , OLD.Name, @Operation, @OpValue);
+INSERT INTO transaction_history VALUES(NULL , OLD.account_Name, @transaction_Operation, @OpValue);
 end$$
 DELIMITER ;
